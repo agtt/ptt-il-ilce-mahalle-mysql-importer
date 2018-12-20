@@ -76,8 +76,8 @@ try:
                         neighborhood_slug = slugify(neighborhood_name)
 
                         with connection.cursor() as cursor:
-                            sql = "INSERT INTO `neighborhood` (`district_id`, `name`, `slug`) VALUES (%s, %s, %s);"
-                            cursor.execute(sql, (district_id, neighborhood_name, neighborhood_slug))
+                            sql = "INSERT INTO `neighborhood` (`district_id`,`city_id`,`name`, `slug`) VALUES (%s,%s, %s, %s);"
+                            cursor.execute(sql, (district_id,city_id,neighborhood_name, neighborhood_slug))
                             connection.commit()
                             neighborhood_id = cursor.lastrowid
 
@@ -86,8 +86,8 @@ try:
                                 part_slug = slugify(part_name)
 
                                 with connection.cursor() as cursor:
-                                    sql = "INSERT INTO `part` (`neighborhood_id`, `name`, `slug`, `postal_code`) VALUES (%s, %s, %s, %s);"
-                                    cursor.execute(sql, (neighborhood_id, part_name, part_slug, regions[city][district][neighborhood][part]))
+                                    sql = "INSERT INTO `part` (`neighborhood_id`,`district_id`, `name`, `slug`, `postal_code`) VALUES (%s,%s, %s, %s, %s);"
+                                    cursor.execute(sql, (neighborhood_id,district_id, part_name, part_slug, regions[city][district][neighborhood][part]))
                                     connection.commit()
                                     part_id = cursor.lastrowid
                                     postal_code = regions[city][district][neighborhood][part]
